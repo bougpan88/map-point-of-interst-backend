@@ -1,0 +1,21 @@
+# Datasource
+spring:
+ datasource:
+  url: jdbc:postgresql://192.168.99.100:5432/map_places
+  username: admin
+  password: secret
+ jpa:
+  hibernate:
+   ddl-auto: update
+
+server:
+ port: 9595
+
+spring.jpa.properties.hibernate.dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
+spring.jpa.database-platform: org.hibernate.spatial.dialect.postgis.PostgisDialect
+hibernate.dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
+
+#Log http requests and responses
+logging.level.org.springframework.ws.server.MessageTracing.sent: TRACE
+#Log every url mapping at startup
+logging.level.org.springframework.web.servlet.mvc.method.annotation: TRACE

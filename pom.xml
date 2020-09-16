@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.2.5.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.boug</groupId>
+	<artifactId>pointOfInterest</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>pointOfInterest</name>
+	<description>Points of interest application</description>
+
+	<repositories>
+		<repository>
+			<id>osgeo-alt</id>
+			<url>https://repo.osgeo.org/repository/release/</url>
+		</repository>
+		<repository>
+			<id>geomajas</id>
+			<name>Geomajas Maven Repository</name>
+			<url>http://maven.geomajas.org/(http://maven.geomajas.org/)</url>
+		</repository>
+
+	</repositories>
+
+
+	<properties>
+		<java.version>1.8</java.version>
+		<springfox.version>3.0.0</springfox.version>
+		<swagger-models.version>1.5.21</swagger-models.version>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web-services</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>wsdl4j</groupId>
+			<artifactId>wsdl4j</artifactId>
+		</dependency>
+
+
+		<!--In order to use points for coordinates-->
+		<dependency>
+			<groupId>com.vividsolutions</groupId>
+			<artifactId>jts</artifactId>
+			<version>1.13</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-spatial</artifactId>
+			<version>5.2.5.Final</version>
+		</dependency>
+
+		<!--Write and display less code with help of lombok-->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.16</version>
+		</dependency>
+
+		<!--needed for rest mapping of geometry-->
+		<dependency>
+			<groupId>com.bedatadriven</groupId>
+			<artifactId>jackson-datatype-jts</artifactId>
+			<version>2.3</version>
+		</dependency>
+
+
+
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-shapefile</artifactId>
+			<version>22.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-epsg-hsql</artifactId>
+			<version>22.2</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-maven-plugin</artifactId>
+			<!-- Configuration excecutable=true i have added this to make the jar excecutable-->
+			<configuration>
+				<executable>true</executable>
+			</configuration>
+			<executions>
+				<execution>
+					<phase>install</phase>
+					<goals>
+						<goal>repackage</goal>
+					</goals>
+					<configuration>
+						<!-- Configuration classifier=exec i have added this to force maven create one Fat
+                        excecutable jar but also another jar for the dependencies of the payload modules-->
+						<!--  <classifier>exec</classifier>-->
+					</configuration>
+				</execution>
+			</executions>
+		</plugin>
+		</plugins>
+	</build>
+
+</project>
