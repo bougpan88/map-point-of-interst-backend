@@ -11,6 +11,8 @@ spring:
 server:
  port: 9595
 
+maxCounterUpdateIncreaseAttempts: 10
+
 spring.jpa.properties.hibernate.dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
 spring.jpa.database-platform: org.hibernate.spatial.dialect.postgis.PostgisDialect
 hibernate.dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
