@@ -1,6 +1,7 @@
 package com.boug.geospatial.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import com.vividsolutions.jts.geom.Point;
 
@@ -13,6 +14,7 @@ import java.util.Objects;
 @Table(name = "point_of_interest")
 @Getter
 @Setter
+@NoArgsConstructor
 public class PointOfInterest {
 
     @Id
@@ -35,8 +37,6 @@ public class PointOfInterest {
 
     @Column(name = "request_counter")
     private Long requestCounter;
-
-    public PointOfInterest(){}
 
     public PointOfInterest(Long id, @NotNull @Size(min = 1) String city, Point mapPoint, String country, String capital, Long population, Long requestCounter) {
         this.id = id;

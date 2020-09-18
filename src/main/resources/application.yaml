@@ -1,21 +1,19 @@
-# Datasource
 spring:
+ jpa:
+   properties.hibernate.dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
+   database-platform: org.hibernate.spatial.dialect.postgis.PostgisDialect
+   hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
  datasource:
   url: jdbc:postgresql://192.168.99.100:5432/map_places
   username: admin
   password: secret
- jpa:
-  hibernate:
-   ddl-auto: update
 
 server:
  port: 9595
 
 maxCounterUpdateIncreaseAttempts: 10
-
-spring.jpa.properties.hibernate.dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
-spring.jpa.database-platform: org.hibernate.spatial.dialect.postgis.PostgisDialect
-hibernate.dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
 
 #Log http requests and responses
 logging.level.org.springframework.ws.server.MessageTracing.sent: TRACE

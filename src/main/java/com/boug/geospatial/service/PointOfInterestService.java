@@ -1,20 +1,17 @@
 package com.boug.geospatial.service;
 
 import com.boug.geospatial.domain.PointOfInterest;
+import com.boug.geospatial.model.PointOfInterestCache;
 import com.boug.geospatial.repository.PointOfInterestRepository;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -22,7 +19,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 public class PointOfInterestService {
 
     private PointOfInterestRepository pointOfInterestRepository;
-    private List<PointOfInterest> pointOfInterests = new ArrayList<>();
+    private List<PointOfInterestCache> pointOfInterestsCache = new ArrayList<>();
     private static final Logger LOGGER = getLogger(PointOfInterestService.class);
     private Integer maxCounterIncreaseAttempts;
 
@@ -47,36 +44,84 @@ public class PointOfInterestService {
      * In case getNearestPoint() is triggered at the same time from another thread, it won't cause any error.
      * Why are we safe:
      * -If getNearestPoint has gone inside the for loop it will already have an iterator so it will continue iterating through
-     * the old list even if this method here (loadDataInMemory) attaches a new list to reference pointOfInterests.
-     * The iterator will still point to the original object even if the pointOfInterests reference links to new object.
+     * the old list even if this method here (loadDataInMemory) attaches a new list to reference pointOfInterestsCache.
+     * The iterator will still point to the original object even if the pointOfInterestsCache reference links to new object.
      * -If getNearestPoint has not gone inside the for loop yet, it will be able to see the new list that has been attached
-     * to reference pointOfInterests from this method here (loadDataInMemory).
+     * to reference pointOfInterestsCache from this method here (loadDataInMemory).
      */
     @Scheduled(cron ="0 0 23 * * *")
     private void loadDataInMemory(){
-        pointOfInterests = pointOfInterestRepository.findAll();
+        pointOfInterestsCache = pointOfInterestRepository.findAll()
+                                                         .stream()
+                                                         .map(pointOfInterest -> new PointOfInterestCache(pointOfInterest.getId(),
+                                                                                                     pointOfInterest.getMapPoint(),
+                                                                                                     pointOfInterest.getCity()))
+                                                         .collect(Collectors.toList());
     }
 
     /**
-     * The nearest point is retrieved from cache and then the counter for that row in database is increased by 1.
+     * The nearest point is located from cache and then the counter for that row in database is increased by 1.
+     * Based on the id of the nearest point that we found in cache we hit database to retrieve full information about
+     * this point.
+     * @param lat based on this lat we search to find the nearest point in cache
+     * @param lng based on this lng we search to find the nearest point in cache
+     * @return Full information about the nearest point which is retrieved from database.
+     */
+    public PointOfInterest getNearestPointAndUpdateCounter(double lat, double lng){
+        PointOfInterestCache nearestCachePoint = getNearestCachePointAndUpdateCounter(lat, lng);
+        Optional<PointOfInterest> nearestPointDB = pointOfInterestRepository.findById(nearestCachePoint.getId());
+        if (nearestPointDB.isPresent()){
+            return nearestPointDB.get();
+        } else {
+            throw new IllegalStateException();
+        }
+    }
+
+    /**
+     * The nearest point is located from cache and then the counter for that row in database is increased by 1.
+     * This function returns the city name from the nearest point which was found in cache. It doesn't hit database
+     * to retrieve info, only to update the counter.
+     *
+     * @param lat based on this lat we search to find the nearest point in cache
+     * @param lng based on this lng we search to find the nearest point in cache
+     * @return City name of nearest point directly retrieved from cache.
+     */
+    public String getNearestCityNameAndUpdateCounter(double lat, double lng){
+        return getNearestCachePointAndUpdateCounter(lat, lng).getCityName();
+    }
+
+    /**
+     * The nearest point is located from cache and then the counter for that row in database is increased by 1.
+     * This function returns the nearest point which was found in cache. It doesn't hit database
+     * to retrieve info, only to update the counter.
+     *
+     * @param lat based on this lat we search to find the nearest point in cache
+     * @param lng based on this lng we search to find the nearest point in cache
+     * @return Nearest point directly retrieved from cache.
+     */
+    public PointOfInterestCache getNearestCachePointAndUpdateCounter(double lat, double lng){
+        PointOfInterestCache nearestPoint = getNearestPoint(lat, lng);
+        tryIncrementCounter(nearestPoint.getId());
+        return nearestPoint;
+    }
+
+    /**
      * Because of REPEATABLE_READ transaction level it is possible that the update fails.
      * We will repeat the update statement until it doesn't fail and maximum maxCounterIncreaseAttempts times.
      * After maxCounterIncreaseAttempts times of failed update attempts we will stop trying.
      */
-    public PointOfInterest getNearestPointAndUpdateCounter(double lat, double lng){
-        PointOfInterest nearestPoint = getNearestPoint(lat, lng);
+    private void tryIncrementCounter(long id){
         for (int attempt = 1; attempt <= maxCounterIncreaseAttempts; attempt++) {
             try {
-                pointOfInterestRepository.increaseCounter(nearestPoint.getId());
+                pointOfInterestRepository.increaseCounter(id);
                 if (attempt > 1){
-                    LOGGER.info("With attempt {} update for id {} was successful", attempt, nearestPoint.getId());
+                    LOGGER.info("With attempt {} update for id {} was successful", attempt, id);
                 }
                 break;
             } catch (RuntimeException ex) {
-                LOGGER.error("Update statement for id {} failed. Attempt {}", nearestPoint.getId(), attempt, ex);
+                LOGGER.error("Update statement for id {} failed. Attempt {}", id, attempt, ex);
             }
         }
-        return nearestPoint;
     }
 
     public List<PointOfInterest> getPointsWithGreaterCounter(long counter){
@@ -84,12 +129,12 @@ public class PointOfInterestService {
     }
 
     /**
-     * O(n). Search and return of point with minimum distance happens in one loop
+     * O(n). Search and return of point with minimum distance happens in one loop.
      */
-    private PointOfInterest getNearestPoint(double lat, double lng){
-        PointOfInterest nearestPoint = null;
+    private PointOfInterestCache getNearestPoint(double lat, double lng){
+        PointOfInterestCache nearestPoint = null;
         Double minDistance = null;
-        for (PointOfInterest pointOfInterest : pointOfInterests){
+        for (PointOfInterestCache pointOfInterest : pointOfInterestsCache){
             Double distance = distFrom(lat, lng, pointOfInterest.getMapPoint().getX(), pointOfInterest.getMapPoint().getY());
             if (minDistance == null || distance < minDistance){
                 minDistance = distance;
