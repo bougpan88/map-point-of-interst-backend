@@ -24,13 +24,13 @@ public class PointOfInterestService {
     private PointOfInterestRepository pointOfInterestRepository;
     private List<PointOfInterest> pointOfInterests = new ArrayList<>();
     private static final Logger LOGGER = getLogger(PointOfInterestService.class);
-
-    @Value("${maxCounterUpdateIncreaseAttempts}")
     private Integer maxCounterIncreaseAttempts;
 
     @Autowired
-    public PointOfInterestService(PointOfInterestRepository pointOfInterestRepository){
+    public PointOfInterestService(PointOfInterestRepository pointOfInterestRepository,
+                                  @Value("${maxCounterUpdateIncreaseAttempts}") Integer maxCounterIncreaseAttempts){
         this.pointOfInterestRepository = pointOfInterestRepository;
+        this.maxCounterIncreaseAttempts = maxCounterIncreaseAttempts;
     }
 
     /**
@@ -44,7 +44,7 @@ public class PointOfInterestService {
     /**
      * Cache will be renewed every day at 23:00
      *
-     * In case getNearestPoint is triggered at the same time from another thread, it won't cause any error.
+     * In case getNearestPoint() is triggered at the same time from another thread, it won't cause any error.
      * Why are we safe:
      * -If getNearestPoint has gone inside the for loop it will already have an iterator so it will continue iterating through
      * the old list even if this method here (loadDataInMemory) attaches a new list to reference pointOfInterests.
@@ -77,6 +77,10 @@ public class PointOfInterestService {
             }
         }
         return nearestPoint;
+    }
+
+    public List<PointOfInterest> getPointsWithGreaterCounter(long counter){
+        return pointOfInterestRepository.findByRequestCounterGreaterThan(counter);
     }
 
     /**

@@ -1,0 +1,11 @@
+INSERT INTO point_of_interest (city, country, capital, population, id, request_counter, map_point) VALUES ('Athens','Greece','primary',3242000,1300715560,0,'Point(37.9833 23.7333)');
+INSERT INTO point_of_interest (city, country, capital, population, id, request_counter, map_point) VALUES ('Patra','Greece','admin',163360,1300201099,5, 'Point(38.23 21.73)');
+INSERT INTO point_of_interest (city, country, capital, population, id, request_counter, map_point) VALUES ('Ioannina','Greece','admin',86304,1300317204,2,'Point(39.6679 20.8509)');
+INSERT INTO point_of_interest (city, country, capital, population, id, request_counter, map_point) VALUES ('Chania','Greece','minor',78728,1300233408,1, 'Point(35.5122 24.0156)');
+INSERT INTO point_of_interest (city, country, capital, population, id, request_counter, map_point) VALUES ('Rodos','Greece','minor',56969,1300944675,4, 'Point(36.4412 28.2225)');
+INSERT INTO point_of_interest (city, country, capital, population, id, request_counter, map_point) VALUES ('Kerkyra','Greece','admin',38517,1300093403,0, 'Point(39.6154 19.9147)');
+INSERT INTO point_of_interest (city, country, capital, population, id, request_counter, map_point) VALUES ('Tripoli','Greece','admin',28970,1300131630,0, 'Point(37.5091 22.3794)');
+INSERT INTO point_of_interest (city, country, capital, population, id, request_counter, map_point) VALUES ('Greece','United States','admin',96842,1840058136,0, 'Point(43.2461 -77.6989)');
+INSERT INTO point_of_interest (city, country, capital, population, id, request_counter, map_point) VALUES ('Midland','United States','admin',59138,1840002660,0, 'Point(43.6239 -84.2316)');
+INSERT INTO point_of_interest (city, country, capital, population, id, request_counter, map_point) VALUES ('San Francisco','Argentina','minor',59062,1032491643,0, 'Point(-31.43 -62.09)');
+INSERT INTO point_of_interest (city, country, capital, population, id, request_counter, map_point) VALUES ('Kalamata','Greece','minor',71823,1300638148,0, 'Point(37.0389 22.1142)');

@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: never
+  jpa:
+    properties.hibernate.default_schema: public
+    database-platform: org.hibernate.spatial.dialect.postgis.PostgisDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
+
+maxCounterUpdateIncreaseAttempts: 10
