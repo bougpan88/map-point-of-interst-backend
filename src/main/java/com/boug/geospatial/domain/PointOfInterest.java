@@ -29,16 +29,17 @@ public class PointOfInterest {
     @NotNull
     private Point mapPoint;
 
+    @Column(name = "request_counter")
+    @NotNull
+    private Long requestCounter;
+
     private String country;
 
     private String capital;
 
     private Long population;
 
-    @Column(name = "request_counter")
-    private Long requestCounter;
-
-    public PointOfInterest(Long id, @NotNull @Size(min = 1) String city, Point mapPoint, String country, String capital, Long population, Long requestCounter) {
+    public PointOfInterest(Long id, @NotNull @Size(min = 1) String city, Point mapPoint, String country, String capital, Long population,@NotNull Long requestCounter) {
         this.id = id;
         this.city = city;
         this.mapPoint = mapPoint;

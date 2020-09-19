@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="map-points"
+           targetNamespace="map-points" elementFormDefault="qualified">
+
+    <xs:element name="getNearestPointRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="coordinates" type="tns:coordinates"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getNearestPointResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="pointOfInterest" type="tns:pointOfInterestDto"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getNearestCityNameRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="coordinates" type="tns:coordinates"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getNearestCityNameResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="cityName" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getPointsWithGreaterCounterRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="request_counter" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getPointsWithGreaterCounterResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="pointOfInterests" type="tns:pointOfInterestDto"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="pointOfInterestDto">
+        <xs:sequence>
+            <xs:element name="city" type="xs:string"/>
+            <xs:element name="capital" nillable="true" type="xs:string"/>
+            <xs:element name="country" nillable="true" type="xs:string"/>
+            <xs:element name="population" nillable="true" type="xs:long"/>
+            <xs:element name="requestCounter" type="xs:long"/>
+            <xs:element name="coordinates" type="tns:coordinates"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="coordinates">
+        <xs:sequence>
+            <xs:element name="lat" type="xs:double"/>
+            <xs:element name="lng" type="xs:double"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

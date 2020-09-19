@@ -1,7 +1,8 @@
 package com.boug.geospatial;
 
 import com.boug.geospatial.domain.PointOfInterest;
-import com.boug.geospatial.model.PointOfInterestCache;
+import com.boug.geospatial.dto.PointOfInterestCache;
+import com.boug.geospatial.endpoints.PointOfInterestWs;
 import com.boug.geospatial.repository.PointOfInterestRepository;
 import com.boug.geospatial.service.PointOfInterestService;
 import org.junit.ClassRule;

@@ -7,7 +7,7 @@ map_point geometry NOT NULL,
 country character varying(255),
 capital character varying(255),
 population bigint,
-request_counter bigint
+request_counter bigint NOT NULL
  );
 
 ALTER TABLE ONLY public.point_of_interest

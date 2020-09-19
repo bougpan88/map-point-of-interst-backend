@@ -1,7 +1,7 @@
 package com.boug.geospatial.service;
 
 import com.boug.geospatial.domain.PointOfInterest;
-import com.boug.geospatial.model.PointOfInterestCache;
+import com.boug.geospatial.dto.PointOfInterestCache;
 import com.boug.geospatial.repository.PointOfInterestRepository;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,6 +129,9 @@ public class PointOfInterestService {
     }
 
     /**
+     * This function here searches all objects in cache to find the point with the closest distance to the provided
+     * coordinates(lat,lng).
+     *
      * O(n). Search and return of point with minimum distance happens in one loop.
      */
     private PointOfInterestCache getNearestPoint(double lat, double lng){
@@ -144,6 +147,11 @@ public class PointOfInterestService {
         return nearestPoint;
     }
 
+    /**
+     * This function here calculates the distance between 2 points (lat1,lng1) and (lat2,lng2).
+     *
+     * O(n). Search and return of point with minimum distance happens in one loop.
+     */
     private static double distFrom(double lat1, double lng1, double lat2, double lng2) {
         double earthRadius = 6371000; //meters
         double dLat = Math.toRadians(lat2-lat1);

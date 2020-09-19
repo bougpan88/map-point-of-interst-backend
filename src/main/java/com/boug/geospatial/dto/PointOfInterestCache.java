@@ -1,4 +1,4 @@
-package com.boug.geospatial.model;
+package com.boug.geospatial.dto;
 
 import com.vividsolutions.jts.geom.Point;
 import lombok.Getter;
