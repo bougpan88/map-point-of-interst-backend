@@ -73,7 +73,7 @@ public class PointOfInterestService {
         if (nearestPointDB.isPresent()){
             return nearestPointDB.get();
         } else {
-            throw new IllegalStateException();
+            throw new IllegalStateException("Cache is outdated. Id found in cache doesn't exist in database");
         }
     }
 

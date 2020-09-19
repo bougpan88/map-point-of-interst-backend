@@ -34,7 +34,7 @@ public interface PointOfInterestRepository extends JpaRepository<PointOfInterest
     @Modifying(clearAutomatically = true)
     @Query(value = "UPDATE point_of_interest SET request_counter = request_counter +1 " +
                    "WHERE id = :id" , nativeQuery = true)
-    void increaseCounter(@Param("id") Long id);
+    int increaseCounter(@Param("id") Long id);
 
     List<PointOfInterest> findByRequestCounterGreaterThan(long counter);
 
