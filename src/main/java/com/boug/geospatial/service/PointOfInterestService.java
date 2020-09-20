@@ -3,6 +3,7 @@ package com.boug.geospatial.service;
 import com.boug.geospatial.domain.PointOfInterest;
 import com.boug.geospatial.dto.PointOfInterestCache;
 import com.boug.geospatial.repository.PointOfInterestRepository;
+import com.vividsolutions.jts.geom.Point;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -70,10 +71,11 @@ public class PointOfInterestService {
     public PointOfInterest getNearestPointAndUpdateCounter(double lat, double lng){
         PointOfInterestCache nearestCachePoint = getNearestCachePointAndUpdateCounter(lat, lng);
         Optional<PointOfInterest> nearestPointDB = pointOfInterestRepository.findById(nearestCachePoint.getId());
-        if (nearestPointDB.isPresent()){
+        if (nearestPointDB.isPresent() && pointsAreEqual(nearestCachePoint.getMapPoint(), nearestPointDB.get().getMapPoint())){
             return nearestPointDB.get();
         } else {
-            throw new IllegalStateException("Cache is outdated. Id found in cache doesn't exist in database");
+            LOGGER.error("Cache is outdated for row with id: {}", nearestCachePoint.getId());
+            throw new IllegalStateException("Cache is outdated for row with id:" + nearestCachePoint.getId());
         }
     }
 
@@ -161,6 +163,10 @@ public class PointOfInterestService {
                         Math.sin(dLng/2) * Math.sin(dLng/2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
         return (earthRadius * c);
+    }
+
+    private static boolean pointsAreEqual(Point pointA, Point pointB){
+        return (pointA.getX() == pointB.getX() && pointA.getY() == pointB.getY());
     }
 
 }
