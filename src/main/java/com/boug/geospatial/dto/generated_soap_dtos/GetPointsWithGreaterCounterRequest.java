@@ -8,6 +8,9 @@
 
 package com.boug.geospatial.dto.generated_soap_dtos;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -39,25 +42,11 @@ import javax.xml.bind.annotation.XmlType;
     "requestCounter"
 })
 @XmlRootElement(name = "getPointsWithGreaterCounterRequest")
+@Getter
+@Setter
 public class GetPointsWithGreaterCounterRequest {
 
     @XmlElement(name = "request_counter")
     protected long requestCounter;
-
-    /**
-     * Gets the value of the requestCounter property.
-     * 
-     */
-    public long getRequestCounter() {
-        return requestCounter;
-    }
-
-    /**
-     * Sets the value of the requestCounter property.
-     * 
-     */
-    public void setRequestCounter(long value) {
-        this.requestCounter = value;
-    }
 
 }

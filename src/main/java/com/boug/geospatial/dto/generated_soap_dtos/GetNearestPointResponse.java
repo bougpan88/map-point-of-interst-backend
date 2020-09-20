@@ -8,6 +8,9 @@
 
 package com.boug.geospatial.dto.generated_soap_dtos;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -39,33 +42,12 @@ import javax.xml.bind.annotation.XmlType;
     "pointOfInterest"
 })
 @XmlRootElement(name = "getNearestPointResponse")
+@Getter
+@Setter
 public class GetNearestPointResponse {
 
     @XmlElement(required = true)
     protected PointOfInterestDto pointOfInterest;
 
-    /**
-     * Gets the value of the pointOfInterest property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link PointOfInterestDto }
-     *     
-     */
-    public PointOfInterestDto getPointOfInterest() {
-        return pointOfInterest;
-    }
-
-    /**
-     * Sets the value of the pointOfInterest property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link PointOfInterestDto }
-     *     
-     */
-    public void setPointOfInterest(PointOfInterestDto value) {
-        this.pointOfInterest = value;
-    }
 
 }

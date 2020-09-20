@@ -8,6 +8,9 @@
 
 package com.boug.geospatial.dto.generated_soap_dtos;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -47,6 +50,8 @@ import javax.xml.bind.annotation.XmlType;
     "requestCounter",
     "coordinates"
 })
+@Getter
+@Setter
 public class PointOfInterestDto {
 
     @XmlElement(required = true)
@@ -60,141 +65,5 @@ public class PointOfInterestDto {
     protected long requestCounter;
     @XmlElement(required = true)
     protected Coordinates coordinates;
-
-    /**
-     * Gets the value of the city property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getCity() {
-        return city;
-    }
-
-    /**
-     * Sets the value of the city property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setCity(String value) {
-        this.city = value;
-    }
-
-    /**
-     * Gets the value of the capital property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getCapital() {
-        return capital;
-    }
-
-    /**
-     * Sets the value of the capital property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setCapital(String value) {
-        this.capital = value;
-    }
-
-    /**
-     * Gets the value of the country property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getCountry() {
-        return country;
-    }
-
-    /**
-     * Sets the value of the country property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setCountry(String value) {
-        this.country = value;
-    }
-
-    /**
-     * Gets the value of the population property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Long }
-     *     
-     */
-    public Long getPopulation() {
-        return population;
-    }
-
-    /**
-     * Sets the value of the population property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Long }
-     *     
-     */
-    public void setPopulation(Long value) {
-        this.population = value;
-    }
-
-    /**
-     * Gets the value of the requestCounter property.
-     * 
-     */
-    public long getRequestCounter() {
-        return requestCounter;
-    }
-
-    /**
-     * Sets the value of the requestCounter property.
-     * 
-     */
-    public void setRequestCounter(long value) {
-        this.requestCounter = value;
-    }
-
-    /**
-     * Gets the value of the coordinates property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Coordinates }
-     *     
-     */
-    public Coordinates getCoordinates() {
-        return coordinates;
-    }
-
-    /**
-     * Sets the value of the coordinates property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Coordinates }
-     *     
-     */
-    public void setCoordinates(Coordinates value) {
-        this.coordinates = value;
-    }
 
 }

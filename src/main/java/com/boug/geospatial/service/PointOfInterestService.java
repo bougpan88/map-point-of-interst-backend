@@ -41,7 +41,7 @@ public class PointOfInterestService {
     /**
      * Cache will be renewed every day at 23:00
      *
-     * In case getNearestPoint() is triggered at the same time from another thread, it won't cause any error.
+     * In case getNearestPoint() is triggered at the same time from another thread(user's request), it won't cause any error.
      * Why are we safe:
      * -If getNearestPoint has gone inside the for loop it will already have an iterator so it will continue iterating through
      * the old list even if this method here (loadDataInMemory) attaches a new list to reference pointOfInterestsCache.

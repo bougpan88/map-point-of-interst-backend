@@ -2,7 +2,6 @@ package com.boug.geospatial;
 
 import com.boug.geospatial.domain.PointOfInterest;
 import com.boug.geospatial.dto.PointOfInterestCache;
-import com.boug.geospatial.endpoints.PointOfInterestWs;
 import com.boug.geospatial.repository.PointOfInterestRepository;
 import com.boug.geospatial.service.PointOfInterestService;
 import org.junit.ClassRule;
@@ -43,10 +42,10 @@ public class PointOfInterestIntegrationTest {
             .withPassword("password");
 
     @Autowired
-    PointOfInterestRepository pointOfInterestRepository;
+    private PointOfInterestRepository pointOfInterestRepository;
 
     @Value("${maxCounterUpdateIncreaseAttempts}")
-    Integer maxCounterIncreaseAttempts;
+    private Integer maxCounterIncreaseAttempts;
 
 
     public PointOfInterestIntegrationTest(){

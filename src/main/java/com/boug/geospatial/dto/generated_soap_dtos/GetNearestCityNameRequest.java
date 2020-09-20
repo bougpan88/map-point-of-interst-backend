@@ -8,6 +8,9 @@
 
 package com.boug.geospatial.dto.generated_soap_dtos;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -39,33 +42,12 @@ import javax.xml.bind.annotation.XmlType;
     "coordinates"
 })
 @XmlRootElement(name = "getNearestCityNameRequest")
+@Getter
+@Setter
 public class GetNearestCityNameRequest {
 
     @XmlElement(required = true)
     protected Coordinates coordinates;
 
-    /**
-     * Gets the value of the coordinates property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Coordinates }
-     *     
-     */
-    public Coordinates getCoordinates() {
-        return coordinates;
-    }
-
-    /**
-     * Sets the value of the coordinates property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Coordinates }
-     *     
-     */
-    public void setCoordinates(Coordinates value) {
-        this.coordinates = value;
-    }
 
 }

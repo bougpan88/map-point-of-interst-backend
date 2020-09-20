@@ -6,7 +6,7 @@ spring:
       ddl-auto: update
       dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
  datasource:
-  url: jdbc:postgresql://192.168.99.100:5432/map_places
+  url: ${DATABASE_URL} # Loaded as environment property from docker container
   username: admin
   password: secret
 

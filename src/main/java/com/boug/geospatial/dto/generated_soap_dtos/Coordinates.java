@@ -8,6 +8,9 @@
 
 package com.boug.geospatial.dto.generated_soap_dtos;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -38,6 +41,8 @@ import javax.xml.bind.annotation.XmlType;
     "lat",
     "lng"
 })
+@Getter
+@Setter
 public class Coordinates {
 
     protected double lat;
@@ -50,37 +55,4 @@ public class Coordinates {
         this.lat = lat;
         this.lng = lng;
     }
-
-    /**
-     * Gets the value of the lat property.
-     * 
-     */
-    public double getLat() {
-        return lat;
-    }
-
-    /**
-     * Sets the value of the lat property.
-     * 
-     */
-    public void setLat(double value) {
-        this.lat = value;
-    }
-
-    /**
-     * Gets the value of the lng property.
-     * 
-     */
-    public double getLng() {
-        return lng;
-    }
-
-    /**
-     * Sets the value of the lng property.
-     * 
-     */
-    public void setLng(double value) {
-        this.lng = value;
-    }
-
 }
