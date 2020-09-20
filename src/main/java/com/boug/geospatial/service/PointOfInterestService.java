@@ -151,8 +151,6 @@ public class PointOfInterestService {
 
     /**
      * This function here calculates the distance between 2 points (lat1,lng1) and (lat2,lng2).
-     *
-     * O(n). Search and return of point with minimum distance happens in one loop.
      */
     private static double distFrom(double lat1, double lng1, double lat2, double lng2) {
         double earthRadius = 6371000; //meters
